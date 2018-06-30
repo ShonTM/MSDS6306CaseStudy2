@@ -1,0 +1,30 @@
+---
+title: "MSDS 6306 - Case Study 2 Project"
+author: "Swee Chew, Mallory Hightower, Shon Mohsin and Laura Niederlander"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+```{r}
+
+```
+
+
+## Data
+
+```{r}
+
+```
+
+
+## Conclusion
+
+
