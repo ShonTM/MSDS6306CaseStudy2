@@ -11,6 +11,39 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+data import and tidy data
+
+```{r}
+url <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
+unstcrimedata <- read.csv(url, header = FALSE)
+dim(unstcrimedata)
+# head(unstcrimedata)
+colnames(unstcrimedata) <- c("state", "county", "community", "communityname", "fold", "population", "householdsize", "racepctblack", "racePctWhite", "racePctAsian", "racePctHisp", "agePct12t21", "agePct12t29", "agePct16t24", "agePct65up", "numbUrban", "pctUrban", "medIncome", "pctWWage", "pctWFarmSelf", "pctWInvInc", "pctWSocSec", "pctWPubAsst", "pctWRetire", "medFamInc", "perCapInc", "whitePerCap", "blackPerCap", "indianPerCap", "AsianPerCap", "OtherPerCap", "HispPerCap", "NumUnderPov", "PctPopUnderPov", "PctLess9thGrade", "PctNotHSGrad", "PctBSorMore", "PctUnemployed", "PctEmploy", "PctEmplManu", "PctEmplProfServ", "PctOccupManu", "PctOccupMgmtProf", "MalePctDivorce", "MalePctNevMarr", "FemalePctDiv", "TotalPctDiv", "PersPerFam", "PctFam2Par", "PctKids2Par", "PctYoungKids2Par", "PctTeen2Par", "PctWorkMomYoungKids", "PctWorkMom", "NumIlleg", "PctIlleg", "NumImmig", "PctImmigRecent", "PctImmigRec5", "PctImmigRec8", "PctImmigRec10", "PctRecentImmig", "PctRecImmig5", "PctRecImmig8", "PctRecImmig10", "PctSpeakEnglOnly", "PctNotSpeakEnglWell", "PctLargHouseFam", "PctLargHouseOccup", "PersPerOccupHous", "PersPerOwnOccHous", "PersPerRentOccHous", "PctPersOwnOccup", "PctPersDenseHous", "PctHousLess3BR", "MedNumBR", "HousVacant", "PctHousOccup", "PctHousOwnOcc", "PctVacantBoarded", "PctVacMore6Mos", "MedYrHousBuilt", "PctHousNoPhone", "PctWOFullPlumb", "OwnOccLowQuart", "OwnOccMedVal", "OwnOccHiQuart", "RentLowQ", "RentMedian", "RentHighQ", "MedRent", "MedRentPctHousInc", "MedOwnCostPctInc", "MedOwnCostPctIncNoMtg", "NumInShelters", "NumStreet", "PctForeignBorn", "PctBornSameState", "PctSameHouse85", "PctSameCity85", "PctSameState85", "LemasSwornFT", "LemasSwFTPerPop", "LemasSwFTFieldOps", "LemasSwFTFieldPerPop", "LemasTotalReq", "LemasTotReqPerPop", "PolicReqPerOffic", "PolicPerPop", "RacialMatchCommPol", "PctPolicWhite", "PctPolicBlack", "PctPolicHisp", "PctPolicAsian", "PctPolicMinor", "OfficAssgnDrugUnits", "NumKindsDrugsSeiz", "PolicAveOTWorked", "LandArea", "PopDens", "PctUsePubTrans", "PolicCars", "PolicOperBudg", "LemasPctPolicOnPatr", "LemasGangUnitDeploy", "LemasPctOfficDrugUn", "PolicBudgPerPop", "ViolentCrimesPerPop")
+crimedata <- unstcrimedata
+summary(crimedata)
+head(crimedata)
+```
+
+## Data Set Citations
+U. S. Department of Commerce, Bureau of the Census, Census Of Population And Housing 
+1990 United States: Summary Tape File 1a & 3a (Computer Files),
+
+U.S. Department Of Commerce, Bureau Of The Census Producer, Washington, DC and 
+Inter-university Consortium for Political and Social Research Ann Arbor, Michigan. 
+(1992)
+
+U.S. Department of Justice, Bureau of Justice Statistics, Law Enforcement Management 
+And Administrative Statistics (Computer File) U.S. Department Of Commerce, Bureau Of 
+The Census Producer, Washington, DC and Inter-university Consortium for Political and 
+Social Research Ann Arbor, Michigan. (1992)
+
+U.S. Department of Justice, Federal Bureau of Investigation, Crime in the United 
+States (Computer File) (1995)
+
+Redmond, M. A. and A. Baveja: A Data-Driven Software Tool for Enabling Cooperative 
+Information Sharing Among Police Departments. European Journal of Operational Research 
+141 (2002) 660-678. 
+
 ## Introduction
 
 ```{r}
