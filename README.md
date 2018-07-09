@@ -2,6 +2,9 @@
 MSDS6306 Case Study 2
 Contributors: Shon Mohsin, Mallory Hightower, Laura N, Swee Chew
 
+Dataset: Crimedata
+http://archive.ics.uci.edu/ml/datasets/Communities+and+Crime
+
 Roles
 Shon - Project Manager, git 
 Mallory - statistician - recommend tests
