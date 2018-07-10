@@ -1,0 +1,12 @@
+Hypothesis:
+Lower Education levels impact crime rates by Age, Ethnicity, and HH Size.
+
+
+
+Comparison between Education vs Crime?
+
+Gender alone is not available - tied to Marital status
+
+Homeless vs Education / Age/ Ethnicity / HH Size
+
+
