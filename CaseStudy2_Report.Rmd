@@ -18,6 +18,7 @@ url <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/com
 unstcrimedata <- read.csv(url, header = FALSE)
 dim(unstcrimedata)
 # head(unstcrimedata)
+
 colnames(unstcrimedata) <- c("state", "county", "community", "communityname", "fold", "population", "householdsize", "racepctblack", "racePctWhite", "racePctAsian", "racePctHisp", "agePct12t21", "agePct12t29", "agePct16t24", "agePct65up", "numbUrban", "pctUrban", "medIncome", "pctWWage", "pctWFarmSelf", "pctWInvInc", "pctWSocSec", "pctWPubAsst", "pctWRetire", "medFamInc", "perCapInc", "whitePerCap", "blackPerCap", "indianPerCap", "AsianPerCap", "OtherPerCap", "HispPerCap", "NumUnderPov", "PctPopUnderPov", "PctLess9thGrade", "PctNotHSGrad", "PctBSorMore", "PctUnemployed", "PctEmploy", "PctEmplManu", "PctEmplProfServ", "PctOccupManu", "PctOccupMgmtProf", "MalePctDivorce", "MalePctNevMarr", "FemalePctDiv", "TotalPctDiv", "PersPerFam", "PctFam2Par", "PctKids2Par", "PctYoungKids2Par", "PctTeen2Par", "PctWorkMomYoungKids", "PctWorkMom", "NumIlleg", "PctIlleg", "NumImmig", "PctImmigRecent", "PctImmigRec5", "PctImmigRec8", "PctImmigRec10", "PctRecentImmig", "PctRecImmig5", "PctRecImmig8", "PctRecImmig10", "PctSpeakEnglOnly", "PctNotSpeakEnglWell", "PctLargHouseFam", "PctLargHouseOccup", "PersPerOccupHous", "PersPerOwnOccHous", "PersPerRentOccHous", "PctPersOwnOccup", "PctPersDenseHous", "PctHousLess3BR", "MedNumBR", "HousVacant", "PctHousOccup", "PctHousOwnOcc", "PctVacantBoarded", "PctVacMore6Mos", "MedYrHousBuilt", "PctHousNoPhone", "PctWOFullPlumb", "OwnOccLowQuart", "OwnOccMedVal", "OwnOccHiQuart", "RentLowQ", "RentMedian", "RentHighQ", "MedRent", "MedRentPctHousInc", "MedOwnCostPctInc", "MedOwnCostPctIncNoMtg", "NumInShelters", "NumStreet", "PctForeignBorn", "PctBornSameState", "PctSameHouse85", "PctSameCity85", "PctSameState85", "LemasSwornFT", "LemasSwFTPerPop", "LemasSwFTFieldOps", "LemasSwFTFieldPerPop", "LemasTotalReq", "LemasTotReqPerPop", "PolicReqPerOffic", "PolicPerPop", "RacialMatchCommPol", "PctPolicWhite", "PctPolicBlack", "PctPolicHisp", "PctPolicAsian", "PctPolicMinor", "OfficAssgnDrugUnits", "NumKindsDrugsSeiz", "PolicAveOTWorked", "LandArea", "PopDens", "PctUsePubTrans", "PolicCars", "PolicOperBudg", "LemasPctPolicOnPatr", "LemasGangUnitDeploy", "LemasPctOfficDrugUn", "PolicBudgPerPop", "ViolentCrimesPerPop")
 crimedata <- unstcrimedata
 summary(crimedata)
@@ -46,16 +47,129 @@ Information Sharing Among Police Departments. European Journal of Operational Re
 
 ## Introduction
 
+
+
 ```{r}
 
+library(ggplot2)
+##Crime Data HH Size, Violent Crimes per Population, by population, State, MedIncome, Age
+ 
+qplot(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
+
+## householdsize: mean people per household (numeric - decimal)
+
+
+qplot(crimedata$ViolentCrimesPerPop, crimedata$population)
+##population: population for community: (numeric - decimal)
+
+
+qplot(crimedata$state, crimedata$ViolentCrimesPerPop)
+##state: US state (by number) - not counted as predictive above, but if considered, should be consided nominal (nominal)
+
+
+qplot(crimedata$medIncome, crimedata$ViolentCrimesPerPop)
+##medIncome: median household income (numeric - decimal)
+
+
+qplot(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
+
+##40% of Age 12-29 concentration around .2 per 100K make up 
+##percentage of population that is 12-29 in age (numeric - decimal)
+## ViolentCrimesPerPop: total number of violent crimes per 100K popuation (numeric - decimal) GOAL attribute (to be predicted)
+
 ```
+-- agePct12t21: percentage of population that is 12-21 in age (numeric - decimal)
+-- agePct12t29: percentage of population that is 12-29 in age (numeric - decimal)
+-- agePct16t24: percentage of population that is 16-24 in age (numeric - decimal)
+-- agePct65up: percentage of population that is 65 and over in age (numeric - decimal)
+
 
 
 ## Data
 
 ```{r}
 
+##Crime Data by Demographic ethnicity
+
+qplot(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$OtherPerCap, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
+
+
+##blackPerCap, indianPerCap, AsianPerCap, OtherPerCap, HispPerCap, whitePerCap
+##householdsize, population, ViolentCrimesPerPop, 
+
 ```
+-- racepctblack: percentage of population that is african american (numeric - decimal)
+-- racePctWhite: percentage of population that is caucasian (numeric - decimal)
+-- racePctAsian: percentage of population that is of asian heritage (numeric - decimal)
+-- racePctHisp: percentage of population that is of hispanic heritage (numeric - decimal)
+
+```{r}
+
+##Community Crime Data by Rental levels and population density 
+
+qplot(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
+
+
+
+##ViolentCrimesPerPop
+##PopDens, RentLowQ, RentMedian, RentHighQ, MedRent, MedRentPctHousInc, MedOwnCostPctInc, 
+```
+
+```{r}
+
+##Community crime data based on housing occupancy
+
+qplot(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
+
+##HousVacant, PctHousOccup, PctHousOwnOcc, PctVacantBoarded, PctVacMore6Mos
+## House Occup Higher - Vacant and Boarded lower
+
+
+```
+
+```{r}
+
+##Community Crime Data - Education and Employement
+
+qplot(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
+qplot(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
+
+##PctLess9thGrade, PctNotHSGrad, PctBSorMore, PctUnemployed, PctEmploy, PctEmplManu, PctEmplProfServ, PctOccupManu, PctOccupMgmtProf
+```
+-- PctLess9thGrade: percentage of people 25 and over with less than a 9th grade education (numeric - decimal)
+-- PctNotHSGrad: percentage of people 25 and over that are not high school graduates (numeric - decimal)
+-- PctBSorMore: percentage of people 25 and over with a bachelors degree or higher education (numeric - decimal)
+-- PctUnemployed: percentage of people 16 and over, in the labor force, and unemployed (numeric - decimal)
+-- PctEmploy: percentage of people 16 and over who are employed (numeric - decimal)
+-- PctEmplManu: percentage of people 16 and over who are employed in manufacturing (numeric - decimal)
+-- PctEmplProfServ: percentage of people 16 and over who are employed in professional services (numeric - decimal)
+-- PctOccupManu: percentage of people 16 and over who are employed in manufacturing (numeric - decimal) ########
+-- PctOccupMgmtProf: percentage of people 16 and over who are employed in management or professional occupations (numeric - decimal)
 
 
 ## Conclusion
