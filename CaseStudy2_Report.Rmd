@@ -1,6 +1,6 @@
 ---
 title: "MSDS 6306 - Case Study 2 Project"
-author: "Swee Chew, Mallory Hightower, Shon Mohsin and Laura Niederlander"
+author: "Shon Mohsin and Laura Niederlander"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
@@ -13,16 +13,151 @@ knitr::opts_chunk$set(echo = TRUE)
 
 data import and tidy data
 
-```{r}
-url <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
-unstcrimedata <- read.csv(url, header = FALSE)
-dim(unstcrimedata)
-# head(unstcrimedata)
+Introduction:
 
-colnames(unstcrimedata) <- c("state", "county", "community", "communityname", "fold", "population", "householdsize", "racepctblack", "racePctWhite", "racePctAsian", "racePctHisp", "agePct12t21", "agePct12t29", "agePct16t24", "agePct65up", "numbUrban", "pctUrban", "medIncome", "pctWWage", "pctWFarmSelf", "pctWInvInc", "pctWSocSec", "pctWPubAsst", "pctWRetire", "medFamInc", "perCapInc", "whitePerCap", "blackPerCap", "indianPerCap", "AsianPerCap", "OtherPerCap", "HispPerCap", "NumUnderPov", "PctPopUnderPov", "PctLess9thGrade", "PctNotHSGrad", "PctBSorMore", "PctUnemployed", "PctEmploy", "PctEmplManu", "PctEmplProfServ", "PctOccupManu", "PctOccupMgmtProf", "MalePctDivorce", "MalePctNevMarr", "FemalePctDiv", "TotalPctDiv", "PersPerFam", "PctFam2Par", "PctKids2Par", "PctYoungKids2Par", "PctTeen2Par", "PctWorkMomYoungKids", "PctWorkMom", "NumIlleg", "PctIlleg", "NumImmig", "PctImmigRecent", "PctImmigRec5", "PctImmigRec8", "PctImmigRec10", "PctRecentImmig", "PctRecImmig5", "PctRecImmig8", "PctRecImmig10", "PctSpeakEnglOnly", "PctNotSpeakEnglWell", "PctLargHouseFam", "PctLargHouseOccup", "PersPerOccupHous", "PersPerOwnOccHous", "PersPerRentOccHous", "PctPersOwnOccup", "PctPersDenseHous", "PctHousLess3BR", "MedNumBR", "HousVacant", "PctHousOccup", "PctHousOwnOcc", "PctVacantBoarded", "PctVacMore6Mos", "MedYrHousBuilt", "PctHousNoPhone", "PctWOFullPlumb", "OwnOccLowQuart", "OwnOccMedVal", "OwnOccHiQuart", "RentLowQ", "RentMedian", "RentHighQ", "MedRent", "MedRentPctHousInc", "MedOwnCostPctInc", "MedOwnCostPctIncNoMtg", "NumInShelters", "NumStreet", "PctForeignBorn", "PctBornSameState", "PctSameHouse85", "PctSameCity85", "PctSameState85", "LemasSwornFT", "LemasSwFTPerPop", "LemasSwFTFieldOps", "LemasSwFTFieldPerPop", "LemasTotalReq", "LemasTotReqPerPop", "PolicReqPerOffic", "PolicPerPop", "RacialMatchCommPol", "PctPolicWhite", "PctPolicBlack", "PctPolicHisp", "PctPolicAsian", "PctPolicMinor", "OfficAssgnDrugUnits", "NumKindsDrugsSeiz", "PolicAveOTWorked", "LandArea", "PopDens", "PctUsePubTrans", "PolicCars", "PolicOperBudg", "LemasPctPolicOnPatr", "LemasGangUnitDeploy", "LemasPctOfficDrugUn", "PolicBudgPerPop", "ViolentCrimesPerPop")
-crimedata <- unstcrimedata
-summary(crimedata)
-head(crimedata)
+Comm
+
+
+```{r}
+crimedata  <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
+df <- read.csv(url, header = FALSE)
+
+crimedata <- df 
+str(crimedata)
+
+colnames(crimedata) <- c("state",
+"county",
+"community",
+"communityname ",
+"fold",
+"population",
+"householdsize",
+"racepctblack",
+"racePctWhite",
+"racePctAsian",
+"racePctHisp",
+"agePct12t21",
+"agePct12t29",
+"agePct16t24",
+"agePct65up",
+"numbUrban",
+"pctUrban",
+"medIncome",
+"pctWWage",
+"pctWFarmSelf",
+"pctWInvInc",
+"pctWSocSec",
+"pctWPubAsst",
+"pctWRetire",
+"medFamInc",
+"perCapInc",
+"whitePerCap",
+"blackPerCap",
+"indianPerCap",
+"AsianPerCap",
+"OtherPerCap",
+"HispPerCap",
+"NumUnderPov",
+"PctPopUnderPov",
+"PctLess9thGrade",
+"PctNotHSGrad",
+"PctBSorMore",
+"PctUnemployed",
+"PctEmploy",
+"PctEmplManu",
+"PctEmplProfServ",
+"PctOccupManu",
+"PctOccupMgmtProf",
+"MalePctDivorce",
+"MalePctNevMarr",
+"FemalePctDiv",
+"TotalPctDiv",
+"PersPerFam",
+"PctFam2Par",
+"PctKids2Par",
+"PctYoungKids2Par",
+"PctTeen2Par",
+"PctWorkMomYoungKids",
+"PctWorkMom",
+"NumIlleg",
+"PctIlleg",
+"NumImmig",
+"PctImmigRecent",
+"PctImmigRec5",
+"PctImmigRec8",
+"PctImmigRec10",
+"PctRecentImmig",
+"PctRecImmig5",
+"PctRecImmig8",
+"PctRecImmig10",
+"PctSpeakEnglOnly",
+"PctNotSpeakEnglWell",
+"PctLargHouseFam",
+"PctLargHouseOccup",
+"PersPerOccupHous",
+"PersPerOwnOccHous",
+"PersPerRentOccHous",
+"PctPersOwnOccup",
+"PctPersDenseHous",
+"PctHousLess3BR",
+"MedNumBR",
+"HousVacant",
+"PctHousOccup",
+"PctHousOwnOcc",
+"PctVacantBoarded",
+"PctVacMore6Mos",
+"MedYrHousBuilt",
+"PctHousNoPhone",
+"PctWOFullPlumb",
+"OwnOccLowQuart",
+"OwnOccMedVal",
+"OwnOccHiQuart",
+"RentLowQ",
+"RentMedian",
+"RentHighQ",
+"MedRent",
+"MedRentPctHousInc",
+"MedOwnCostPctInc",
+"MedOwnCostPctIncNoMtg",
+"NumInShelters",
+"NumStreet",
+"PctForeignBorn",
+"PctBornSameState",
+"PctSameHouse85",
+"PctSameCity85",
+"PctSameState85",
+"LemasSwornFT",
+"LemasSwFTPerPop",
+"LemasSwFTFieldOps",
+"LemasSwFTFieldPerPop",
+"LemasTotalReq",
+"LemasTotReqPerPop",
+"PolicReqPerOffic",
+"PolicPerPop",
+"RacialMatchCommPol",
+"PctPolicWhite",
+"PctPolicBlack",
+"PctPolicHisp",
+"PctPolicAsian",
+"PctPolicMinor",
+"OfficAssgnDrugUnits",
+"NumKindsDrugsSeiz",
+"PolicAveOTWorked",
+"LandArea",
+"PopDens",
+"PctUsePubTrans",
+"PolicCars",
+"PolicOperBudg",
+"LemasPctPolicOnPatr",
+"LemasGangUnitDeploy",
+"LemasPctOfficDrugUn",
+"PolicBudgPerPop",
+"ViolentCrimesPerPop"
+)
+
+
+
+
 ```
 
 ## Data Set Citations
@@ -54,6 +189,38 @@ Information Sharing Among Police Departments. European Journal of Operational Re
 library(ggplot2)
 ##Crime Data HH Size, Violent Crimes per Population, by population, State, MedIncome, Age
  
+crimedata.lm <- lm(ViolentCrimesPerPop ~ medIncome, data = crimedata)
+newx <- crimedata$medIncome
+newx <- sort(newx)
+
+prd_c <- predict(crimedata.lm, newdata = data.frame(medIncome = newx), 
+                 interval = c("confidence"), type = c("response"), level = .99) 
+prd_p <- predict(crimedata.lm, newdata = data.frame(medIncome = newx), 
+                 interval = c("predict"), type = c("response"), level = .99)
+
+plot(crimedata$medIncome, crimedata$violentCrimesPerPop, ylab = "Crimes per Population", xlab = "Median Income")
+abline(crimedata.lm, col = "red")
+
+lines(newx,prd_c[,2],col = "blue",lty = 2, lwd = 2)
+lines(newx,prd_c[,3],col = "blue", lty = 2, lwd = 2)
+lines(newx,prd_p[,2],col = "green", lty = 2, lwd = 2)
+lines(newx,prd_p[,3],col = "green", lty = 2, lwd = 2)
+
+##Scatterplot of the original data
+##plot(temp, chirps, ylab = "Chirps Per Minute", xlab = "Temperature")
+
+Income<- cor(crimedata$ViolentCrimesPerPop, crimedata$medIncome)
+pop <- cor(crimedata$ViolentCrimesPerPop, crimedata$population)
+HH <- cor(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
+age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
+cor(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
+cor(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
+cor(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
+cor(crimedata$state, crimedata$ViolentCrimesPerPop)
+
+corr <- c(Income, pop, age1221)
+plot(corr)
+
 qplot(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
 
 ## householdsize: mean people per household (numeric - decimal)
@@ -94,6 +261,12 @@ qplot(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
 
 ##Crime Data by Demographic ethnicity
 
+cor(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
+cor(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
+cor(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
+cor(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
+cor(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
+
 qplot(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
@@ -115,6 +288,14 @@ qplot(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
 
 ##Community Crime Data by Rental levels and population density 
 
+cor(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
+cor(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
+cor(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
+cor(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
+cor(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
+cor(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
+
 qplot(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
@@ -133,6 +314,12 @@ qplot(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
 
 ##Community crime data based on housing occupancy
 
+cor(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
+
 qplot(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
@@ -148,6 +335,18 @@ qplot(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
 ```{r}
 
 ##Community Crime Data - Education and Employement
+
+cor(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
+cor(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
+
+
 
 qplot(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
 qplot(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
