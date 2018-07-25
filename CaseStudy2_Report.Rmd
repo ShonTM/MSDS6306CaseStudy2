@@ -20,7 +20,7 @@ Comm
 
 ```{r}
 crimedata  <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
-df <- read.csv(url, header = FALSE)
+df <- read.csv(crimedata, header = FALSE)
 
 crimedata <- df 
 str(crimedata)
@@ -155,7 +155,7 @@ colnames(crimedata) <- c("state",
 "ViolentCrimesPerPop"
 )
 
-
+head(crimedata)
 
 
 ```
@@ -198,13 +198,80 @@ prd_c <- predict(crimedata.lm, newdata = data.frame(medIncome = newx),
 prd_p <- predict(crimedata.lm, newdata = data.frame(medIncome = newx), 
                  interval = c("predict"), type = c("response"), level = .99)
 
+```
+
+
+```{r}
+
 plot(crimedata$medIncome, crimedata$violentCrimesPerPop, ylab = "Crimes per Population", xlab = "Median Income")
 abline(crimedata.lm, col = "red")
+
+
 
 lines(newx,prd_c[,2],col = "blue",lty = 2, lwd = 2)
 lines(newx,prd_c[,3],col = "blue", lty = 2, lwd = 2)
 lines(newx,prd_p[,2],col = "green", lty = 2, lwd = 2)
 lines(newx,prd_p[,3],col = "green", lty = 2, lwd = 2)
+
+
+```
+
+
+```{r}
+
+data = crimedata
+cdss <- data.frame(crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
+
+head(cdss)
+str(cdss)
+summary(cdss$crimedata.ViolentCrimesPerPop)
+
+```
+
+
+
+```{r}
+x <- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
+y <- c(4, 6, 5, 8, 6, 7, 9, 10, 11, 13, 15, 17, 20, 22, 27, 29, 34, 33, 38, 40)
+
+gender <- factor(c(rep('Male', 10), rep('Female', 10)))
+fake.data <- data.frame(x, y, gender)
+
+plot(fake.data$x, fake.data$y, pch = c(2, 3)[as.numeric(fake.data$gender)],
+     col=c('red', 'blue')[as.numeric(fake.data$gender)], lwd=2,
+     xlab='x', ylab='y')
+legend('topleft', c('Male', 'Female'), col=c('red', 'blue'), pch=c(2, 3), 
+       lty=NULL, pt.lwd=2)
+
+model1 <- lm(y ~ x + gender + x:gender, data=fake.data)
+summary(model1)
+##Set male as the reference level:
+fake.data2 <- within(fake.data, gender <- relevel(gender, ref = 'Male'))
+
+model2 <- lm(y ~ x + gender + x:gender, data=fake.data2)
+summary(model2)
+confint(model2)
+
+##plot 4 grids
+par(mfrow=c(2,2))
+plot(model2)
+
+
+
+
+
+
+class(cdss$crimedata.ViolentCrimesPerPop)
+cdsv <- cdss$crimedata.ViolentCrimesPerPop
+
+hist(cdsv, prob = TRUE, col = "blue", main= "Histogram of Violent Crime Per Population", xlab ="count", ylab="% of Crime per Pop")
+
+
+curve(dnorm(x, mean=mean(cdsv), sd=sd(cdsv)), add=TRUE,
+  col = "blue", main= "Histogram of Violent Crime Per Populatin", xlab ="count", ylab="% of Crime per Pop")
+box()
+
+
 
 ##Scatterplot of the original data
 ##plot(temp, chirps, ylab = "Chirps Per Minute", xlab = "Temperature")
@@ -213,12 +280,26 @@ Income<- cor(crimedata$ViolentCrimesPerPop, crimedata$medIncome)
 pop <- cor(crimedata$ViolentCrimesPerPop, crimedata$population)
 HH <- cor(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
 age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
+
+```
+
+
+
+```{r}
+
+##high correlation btw crime and age 12-29 at 0.153.
+
 cor(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
 cor(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
 cor(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
 cor(crimedata$state, crimedata$ViolentCrimesPerPop)
 
 corr <- c(Income, pop, age1221)
+
+```
+
+```{r}
+
 plot(corr)
 
 qplot(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
