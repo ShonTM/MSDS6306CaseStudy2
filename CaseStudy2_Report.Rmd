@@ -227,10 +227,16 @@ str(cdss)
 summary(cdss$crimedata.ViolentCrimesPerPop)
 
 nacdss <- is.na(cdss)
+```
+
+
+```{r}
+
 #NABEER == NA
 #sum(NABEER, count = TRUE)
-ct_SUM <- colSums(nacdss)
-ct_SUM
+#ct_SUM <- colSums(nacdss)
+#ct_SUM
+
 
 # Untransformed correlation test
 cor(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop)
@@ -240,25 +246,42 @@ cor(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop)
 cor(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop)
 cor(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop)
 
+# Pearson's correlation test
+cor.test(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+
+
 #Check for normality
-qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
 qqline(cdss$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
 qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
 qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
 qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
 qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
 qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE) ## plots the data
+qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
 qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
 
-cdsslog <- log10(cdss)
-cdsslog <- subset(cdsslog, select = -crimedatalog )
+
+```
+
+
+
+```{r}
+#Log Transform all variables
+cdsslog <- log(cdss)
+#cdsslog <- subset(cdsslog, select = -crimedatalog )
 head(cdsslog)
+
 
 
 #Check for normality after log transformation
@@ -276,73 +299,51 @@ cdss[] <- lapply(cdss, function(x) as.numeric(as.character(x)))
 
 
 
-# nancdss <- is.nan(cdss)
+##nancdss <- is.nan(cdsslog)
 # #NABEER == NA
 # #sum(NABEER, count = TRUE)
-# ct_SUM1 <- colSums(nancdss)
-# ct_SUM1
+##ct_SUM1 <- colSums(nancdss)
+##ct_SUM1
 
-str(cdss)
+str(cdsslog)
 
 # Check for normality of log transformed data
-qqnorm(cdss$crimedatalog, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedatalog, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE) ## plots the data
-qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.ViolentCrimesPerPop, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdsslog$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.medIncome, ylim = NULL, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
+qqline(cdsslog$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.agePct12t29, ylim = NULL,pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
+qqline(cdsslog$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.blackPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.HispPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.RentLowQ, ylim = NULL, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
+qqline(cdsslog$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.PctLess9thGrade, ylim = NULL, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
+qqline(cdsslog$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
 
-head(cdss)
+
+
+head(cdsslog)
+
+
+class(cdsslog)
+
 
 # Check for correlation of log transformed violent crime data
-cor(cdss$crimedata.medIncome, cdss$crimedatalog)
-cor(cdss$crimedata.agePct12t29, cdss$crimedatalog)
-cor(cdss$crimedata.blackPerCap, cdss$crimedatalog)
-cor(cdss$crimedata.HispPerCap, cdss$crimedatalog)
-cor(cdss$crimedata.RentLowQ, cdss$crimedatalog)
-cor(cdss$crimedata.PctLess9thGrade, cdss$crimedatalog)
+cor.test(cdsslog$crimedata.medIncome, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.agePct12t29, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.blackPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.HispPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.RentLowQ, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.PctLess9thGrade, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
 
 ```
 
 
 
 ```{r}
-x <- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
-y <- c(4, 6, 5, 8, 6, 7, 9, 10, 11, 13, 15, 17, 20, 22, 27, 29, 34, 33, 38, 40)
-
-gender <- factor(c(rep('Male', 10), rep('Female', 10)))
-fake.data <- data.frame(x, y, gender)
-
-plot(fake.data$x, fake.data$y, pch = c(2, 3)[as.numeric(fake.data$gender)],
-     col=c('red', 'blue')[as.numeric(fake.data$gender)], lwd=2,
-     xlab='x', ylab='y')
-legend('topleft', c('Male', 'Female'), col=c('red', 'blue'), pch=c(2, 3), 
-       lty=NULL, pt.lwd=2)
-
-model1 <- lm(y ~ x + gender + x:gender, data=fake.data)
-summary(model1)
-##Set male as the reference level:
-fake.data2 <- within(fake.data, gender <- relevel(gender, ref = 'Male'))
-
-model2 <- lm(y ~ x + gender + x:gender, data=fake.data2)
-summary(model2)
-confint(model2)
-
-##plot 4 grids
-par(mfrow=c(2,2))
-plot(model2)
-
-
-
-
 
 
 class(cdss$crimedata.ViolentCrimesPerPop)
@@ -368,163 +369,6 @@ age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
 ```
 
 
-
-```{r}
-
-##high correlation btw crime and age 12-29 at 0.153.
-
-cor(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
-cor(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
-cor(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
-cor(crimedata$state, crimedata$ViolentCrimesPerPop)
-
-corr <- c(Income, pop, age1221)
-
-```
-
-```{r}
-
-plot(corr)
-
-qplot(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
-
-## householdsize: mean people per household (numeric - decimal)
-
-
-qplot(crimedata$ViolentCrimesPerPop, crimedata$population)
-##population: population for community: (numeric - decimal)
-
-
-qplot(crimedata$state, crimedata$ViolentCrimesPerPop)
-##state: US state (by number) - not counted as predictive above, but if considered, should be consided nominal (nominal)
-
-
-qplot(crimedata$medIncome, crimedata$ViolentCrimesPerPop)
-##medIncome: median household income (numeric - decimal)
-
-
-qplot(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
-
-##40% of Age 12-29 concentration around .2 per 100K make up 
-##percentage of population that is 12-29 in age (numeric - decimal)
-## ViolentCrimesPerPop: total number of violent crimes per 100K popuation (numeric - decimal) GOAL attribute (to be predicted)
-
-```
--- agePct12t21: percentage of population that is 12-21 in age (numeric - decimal)
--- agePct12t29: percentage of population that is 12-29 in age (numeric - decimal)
--- agePct16t24: percentage of population that is 16-24 in age (numeric - decimal)
--- agePct65up: percentage of population that is 65 and over in age (numeric - decimal)
-
-
-
-## Data
-
-```{r}
-
-##Crime Data by Demographic ethnicity
-
-cor(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
-cor(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
-cor(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
-cor(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
-cor(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
-
-qplot(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$OtherPerCap, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
-
-
-##blackPerCap, indianPerCap, AsianPerCap, OtherPerCap, HispPerCap, whitePerCap
-##householdsize, population, ViolentCrimesPerPop, 
-
-```
--- racepctblack: percentage of population that is african american (numeric - decimal)
--- racePctWhite: percentage of population that is caucasian (numeric - decimal)
--- racePctAsian: percentage of population that is of asian heritage (numeric - decimal)
--- racePctHisp: percentage of population that is of hispanic heritage (numeric - decimal)
-
-```{r}
-
-##Community Crime Data by Rental levels and population density 
-
-cor(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
-cor(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
-cor(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
-cor(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
-cor(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
-cor(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
-
-qplot(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
-
-
-
-##ViolentCrimesPerPop
-##PopDens, RentLowQ, RentMedian, RentHighQ, MedRent, MedRentPctHousInc, MedOwnCostPctInc, 
-```
-
-```{r}
-
-##Community crime data based on housing occupancy
-
-cor(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
-
-qplot(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
-
-##HousVacant, PctHousOccup, PctHousOwnOcc, PctVacantBoarded, PctVacMore6Mos
-## House Occup Higher - Vacant and Boarded lower
-
-
-```
-
-```{r}
-
-##Community Crime Data - Education and Employement
-
-cor(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
-cor(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
-
-
-
-qplot(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
-qplot(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
-
-##PctLess9thGrade, PctNotHSGrad, PctBSorMore, PctUnemployed, PctEmploy, PctEmplManu, PctEmplProfServ, PctOccupManu, PctOccupMgmtProf
-```
 -- PctLess9thGrade: percentage of people 25 and over with less than a 9th grade education (numeric - decimal)
 -- PctNotHSGrad: percentage of people 25 and over that are not high school graduates (numeric - decimal)
 -- PctBSorMore: percentage of people 25 and over with a bachelors degree or higher education (numeric - decimal)

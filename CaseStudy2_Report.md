@@ -1,7 +1,7 @@
 ---
 title: "MSDS 6306 - Case Study 2 Project"
 author: "Shon Mohsin and Laura Niederlander"
-date: "25 July, 2018"
+date: "26 July, 2018"
 output:
   html_document:
     keep_md: yes
@@ -482,6 +482,13 @@ Information Sharing Among Police Departments. European Journal of Operational Re
 
 ```r
 library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.5.1
+```
+
+```r
 ##Crime Data HH Size, Violent Crimes per Population, by population, State, MedIncome, Age
  
 crimedata.lm <- lm(ViolentCrimesPerPop ~ medIncome, data = crimedata)
@@ -567,103 +574,493 @@ summary(cdss$crimedata.ViolentCrimesPerPop)
 ##   0.000   0.070   0.150   0.238   0.330   1.000
 ```
 
+```r
+nacdss <- is.na(cdss)
+```
 
 
 
 ```r
-x <- c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
-y <- c(4, 6, 5, 8, 6, 7, 9, 10, 11, 13, 15, 17, 20, 22, 27, 29, 34, 33, 38, 40)
+#NABEER == NA
+#sum(NABEER, count = TRUE)
+#ct_SUM <- colSums(nacdss)
+#ct_SUM
 
-gender <- factor(c(rep('Male', 10), rep('Female', 10)))
-fake.data <- data.frame(x, y, gender)
 
-plot(fake.data$x, fake.data$y, pch = c(2, 3)[as.numeric(fake.data$gender)],
-     col=c('red', 'blue')[as.numeric(fake.data$gender)], lwd=2,
-     xlab='x', ylab='y')
-legend('topleft', c('Male', 'Female'), col=c('red', 'blue'), pch=c(2, 3), 
-       lty=NULL, pt.lwd=2)
+# Untransformed correlation test
+cor(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] -0.4242206
+```
+
+```r
+cor(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] 0.1533567
+```
+
+```r
+cor(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] -0.2753911
+```
+
+```r
+cor(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] -0.2445529
+```
+
+```r
+cor(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] -0.2518469
+```
+
+```r
+cor(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop)
+```
+
+```
+## [1] 0.4110955
+```
+
+```r
+# Pearson's correlation test
+cor.test(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.medIncome and cdss$crimedata.ViolentCrimesPerPop
+## t = -20.908, df = 1992, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.4595596 -0.3875405
+## sample estimates:
+##        cor 
+## -0.4242206
+```
+
+```r
+cor.test(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.agePct12t29 and cdss$crimedata.ViolentCrimesPerPop
+## t = 6.9265, df = 1992, p-value = 5.799e-12
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.1102017 0.1959345
+## sample estimates:
+##       cor 
+## 0.1533567
+```
+
+```r
+cor.test(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.blackPerCap and cdss$crimedata.ViolentCrimesPerPop
+## t = -12.786, df = 1992, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.3154742 -0.2343270
+## sample estimates:
+##        cor 
+## -0.2753911
+```
+
+```r
+cor.test(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.HispPerCap and cdss$crimedata.ViolentCrimesPerPop
+## t = -11.257, df = 1992, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.2853861 -0.2028335
+## sample estimates:
+##        cor 
+## -0.2445529
+```
+
+```r
+cor.test(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.RentLowQ and cdss$crimedata.ViolentCrimesPerPop
+## t = -11.615, df = 1992, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.2925100 -0.2102747
+## sample estimates:
+##        cor 
+## -0.2518469
+```
+
+```r
+cor.test(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdss$crimedata.PctLess9thGrade and cdss$crimedata.ViolentCrimesPerPop
+## t = 20.127, df = 1992, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.3739468 0.4469272
+## sample estimates:
+##       cor 
+## 0.4110955
+```
+
+```r
+#Check for normality
+qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdss$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
 ```
 
 ![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 ```r
-model1 <- lm(y ~ x + gender + x:gender, data=fake.data)
-summary(model1)
-```
-
-```
-## 
-## Call:
-## lm(formula = y ~ x + gender + x:gender, data = fake.data)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -1.900 -0.825 -0.325  0.900  1.800 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)    9.9500     0.9298  10.701 1.06e-08 ***
-## x              5.8500     0.2803  20.867 4.97e-13 ***
-## genderMale    -7.1500     1.3149  -5.438 5.48e-05 ***
-## x:genderMale  -4.1500     0.3965 -10.467 1.45e-08 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.254 on 16 degrees of freedom
-## Multiple R-squared:  0.9906,	Adjusted R-squared:  0.9889 
-## F-statistic: 564.7 on 3 and 16 DF,  p-value: < 2.2e-16
-```
-
-```r
-##Set male as the reference level:
-fake.data2 <- within(fake.data, gender <- relevel(gender, ref = 'Male'))
-
-model2 <- lm(y ~ x + gender + x:gender, data=fake.data2)
-summary(model2)
-```
-
-```
-## 
-## Call:
-## lm(formula = y ~ x + gender + x:gender, data = fake.data2)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -1.900 -0.825 -0.325  0.900  1.800 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)      2.8000     0.9298   3.011  0.00828 ** 
-## x                1.7000     0.2803   6.064 1.64e-05 ***
-## genderFemale     7.1500     1.3149   5.438 5.48e-05 ***
-## x:genderFemale   4.1500     0.3965  10.467 1.45e-08 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.254 on 16 degrees of freedom
-## Multiple R-squared:  0.9906,	Adjusted R-squared:  0.9889 
-## F-statistic: 564.7 on 3 and 16 DF,  p-value: < 2.2e-16
-```
-
-```r
-confint(model2)
-```
-
-```
-##                    2.5 %   97.5 %
-## (Intercept)    0.8289084 4.771092
-## x              1.1056935 2.294306
-## genderFemale   4.3624555 9.937544
-## x:genderFemale 3.3095237 4.990476
-```
-
-```r
-##plot 4 grids
-par(mfrow=c(2,2))
-plot(model2)
+qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
+qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
 ```
 
 ![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-2.png)<!-- -->
+
+```r
+qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
+qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-3.png)<!-- -->
+
+```r
+qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
+qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-4.png)<!-- -->
+
+```r
+qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
+qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-5.png)<!-- -->
+
+```r
+qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
+qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-6.png)<!-- -->
+
+```r
+qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
+qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-7.png)<!-- -->
+
+
+
+
+```r
+#Log Transform all variables
+cdsslog <- log(cdss)
+#cdsslog <- subset(cdsslog, select = -crimedatalog )
+head(cdsslog)
+```
+
+```
+##   crimedata.ViolentCrimesPerPop crimedata.medIncome crimedata.agePct12t29
+## 1                    -1.6094379          -0.9942523            -0.7550226
+## 2                    -0.4004776          -1.1711830            -0.5276327
+## 3                    -0.8439701          -1.2039728            -0.7550226
+## 4                    -2.1202635          -0.5447272            -0.6931472
+## 5                    -3.5065579          -0.6931472            -0.9675840
+## 6                    -1.9661129          -0.6539265            -0.7339692
+##   crimedata.blackPerCap crimedata.HispPerCap crimedata.RentLowQ
+## 1            -1.1394343           -0.8915981         -1.0216512
+## 2            -1.1086626           -1.0498221         -0.8675006
+## 3            -1.3093333           -0.9416085         -1.3093333
+## 4            -0.9416085           -0.8209806         -0.2876821
+## 5            -1.2729657           -0.7339692         -0.9162907
+## 6            -0.2613648           -0.5108256         -0.4004776
+##   crimedata.PctLess9thGrade
+## 1                 -2.302585
+## 2                 -1.966113
+## 3                 -1.309333
+## 4                 -2.407946
+## 5                 -1.386294
+## 6                 -2.040221
+```
+
+```r
+#Check for normality after log transformation
+# cdss$crimedatalog <- log(cdss$crimedata.ViolentCrimesPerPop)
+# cdss$crimedatalog <- as.numeric(cdss$crimedatalog)
+# qqnorm(cdss$crimedatalog, pch = 1, frame = FALSE) ## plots the data
+# qqline(cdss$crimedatalog, col = "steelblue", lwd = 2) ## adds a line
+# grep("?", cdss) ## tells you which lines contain the word in the parenthesis. 
+
+# cdss[] <- lapply(cdss, gsub, pattern='-Inf', replacement='') ## removes chars from dataset
+# grep("-Inf", cdss) ## tells you which lines contain the word in the parenthesis.
+
+# Transform dataset to numeric for analysis
+cdss[] <- lapply(cdss, function(x) as.numeric(as.character(x)))
+
+
+
+##nancdss <- is.nan(cdsslog)
+# #NABEER == NA
+# #sum(NABEER, count = TRUE)
+##ct_SUM1 <- colSums(nancdss)
+##ct_SUM1
+
+str(cdsslog)
+```
+
+```
+## 'data.frame':	1994 obs. of  7 variables:
+##  $ crimedata.ViolentCrimesPerPop: num  -1.609 -0.4 -0.844 -2.12 -3.507 ...
+##  $ crimedata.medIncome          : num  -0.994 -1.171 -1.204 -0.545 -0.693 ...
+##  $ crimedata.agePct12t29        : num  -0.755 -0.528 -0.755 -0.693 -0.968 ...
+##  $ crimedata.blackPerCap        : num  -1.139 -1.109 -1.309 -0.942 -1.273 ...
+##  $ crimedata.HispPerCap         : num  -0.892 -1.05 -0.942 -0.821 -0.734 ...
+##  $ crimedata.RentLowQ           : num  -1.022 -0.868 -1.309 -0.288 -0.916 ...
+##  $ crimedata.PctLess9thGrade    : num  -2.3 -1.97 -1.31 -2.41 -1.39 ...
+```
+
+```r
+# Check for normality of log transformed data
+qqnorm(cdsslog$crimedata.ViolentCrimesPerPop, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdsslog$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.medIncome, ylim = NULL, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
+qqline(cdsslog$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.agePct12t29, ylim = NULL,pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
+qqline(cdsslog$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-3.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.blackPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-4.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.HispPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-5.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.RentLowQ, ylim = NULL, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
+qqline(cdsslog$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-6.png)<!-- -->
+
+```r
+qqnorm(cdsslog$crimedata.PctLess9thGrade, ylim = NULL, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
+qqline(cdsslog$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+```
+
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-6-7.png)<!-- -->
+
+```r
+head(cdsslog)
+```
+
+```
+##   crimedata.ViolentCrimesPerPop crimedata.medIncome crimedata.agePct12t29
+## 1                    -1.6094379          -0.9942523            -0.7550226
+## 2                    -0.4004776          -1.1711830            -0.5276327
+## 3                    -0.8439701          -1.2039728            -0.7550226
+## 4                    -2.1202635          -0.5447272            -0.6931472
+## 5                    -3.5065579          -0.6931472            -0.9675840
+## 6                    -1.9661129          -0.6539265            -0.7339692
+##   crimedata.blackPerCap crimedata.HispPerCap crimedata.RentLowQ
+## 1            -1.1394343           -0.8915981         -1.0216512
+## 2            -1.1086626           -1.0498221         -0.8675006
+## 3            -1.3093333           -0.9416085         -1.3093333
+## 4            -0.9416085           -0.8209806         -0.2876821
+## 5            -1.2729657           -0.7339692         -0.9162907
+## 6            -0.2613648           -0.5108256         -0.4004776
+##   crimedata.PctLess9thGrade
+## 1                 -2.302585
+## 2                 -1.966113
+## 3                 -1.309333
+## 4                 -2.407946
+## 5                 -1.386294
+## 6                 -2.040221
+```
+
+```r
+class(cdsslog)
+```
+
+```
+## [1] "data.frame"
+```
+
+```r
+# Check for correlation of log transformed violent crime data
+cor.test(cdsslog$crimedata.medIncome, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.medIncome and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+```r
+cor.test(cdsslog$crimedata.agePct12t29, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.agePct12t29 and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+```r
+cor.test(cdsslog$crimedata.blackPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.blackPerCap and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+```r
+cor.test(cdsslog$crimedata.HispPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.HispPerCap and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+```r
+cor.test(cdsslog$crimedata.RentLowQ, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.RentLowQ and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+```r
+cor.test(cdsslog$crimedata.PctLess9thGrade, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  cdsslog$crimedata.PctLess9thGrade and cdsslog$crimedata.ViolentCrimesPerPop
+## t = NaN, df = 1992, p-value = NA
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  NaN NaN
+## sample estimates:
+## cor 
+## NaN
+```
+
+
+
 
 ```r
 class(cdss$crimedata.ViolentCrimesPerPop)
@@ -682,9 +1079,11 @@ hist(cdsv, prob = TRUE, col = "blue", main= "Histogram of Violent Crime Per Popu
 curve(dnorm(x, mean=mean(cdsv), sd=sd(cdsv)), add=TRUE,
   col = "blue", main= "Histogram of Violent Crime Per Populatin", xlab ="count", ylab="% of Crime per Pop")
 box()
+```
 
+![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
-
+```r
 ##Scatterplot of the original data
 ##plot(temp, chirps, ylab = "Chirps Per Minute", xlab = "Temperature")
 
@@ -694,534 +1093,7 @@ HH <- cor(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
 age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
 ```
 
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-5-3.png)<!-- -->
 
-
-
-
-```r
-##high correlation btw crime and age 12-29 at 0.153.
-
-cor(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.1533567
-```
-
-```r
-cor(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.09934668
-```
-
-```r
-cor(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.06717145
-```
-
-```r
-cor(crimedata$state, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2113975
-```
-
-```r
-corr <- c(Income, pop, age1221)
-```
-
-
-```r
-plot(corr)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
-
-```r
-qplot(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
-
-```r
-## householdsize: mean people per household (numeric - decimal)
-
-
-qplot(crimedata$ViolentCrimesPerPop, crimedata$population)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-3.png)<!-- -->
-
-```r
-##population: population for community: (numeric - decimal)
-
-
-qplot(crimedata$state, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-4.png)<!-- -->
-
-```r
-##state: US state (by number) - not counted as predictive above, but if considered, should be consided nominal (nominal)
-
-
-qplot(crimedata$medIncome, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-5.png)<!-- -->
-
-```r
-##medIncome: median household income (numeric - decimal)
-
-
-qplot(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-6.png)<!-- -->
-
-```r
-qplot(crimedata$agePct12t29, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-7.png)<!-- -->
-
-```r
-qplot(crimedata$agePct16t24, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-8.png)<!-- -->
-
-```r
-qplot(crimedata$agePct65up, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-7-9.png)<!-- -->
-
-```r
-##40% of Age 12-29 concentration around .2 per 100K make up 
-##percentage of population that is 12-29 in age (numeric - decimal)
-## ViolentCrimesPerPop: total number of violent crimes per 100K popuation (numeric - decimal) GOAL attribute (to be predicted)
-```
--- agePct12t21: percentage of population that is 12-21 in age (numeric - decimal)
--- agePct12t29: percentage of population that is 12-29 in age (numeric - decimal)
--- agePct16t24: percentage of population that is 16-24 in age (numeric - decimal)
--- agePct65up: percentage of population that is 65 and over in age (numeric - decimal)
-
-
-
-## Data
-
-
-```r
-##Crime Data by Demographic ethnicity
-
-cor(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2092722
-```
-
-```r
-cor(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2753911
-```
-
-```r
-cor(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.09085382
-```
-
-```r
-cor(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.1555917
-```
-
-```r
-cor(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2445529
-```
-
-```r
-qplot(crimedata$whitePerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
-
-```r
-qplot(crimedata$blackPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
-
-```r
-qplot(crimedata$indianPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-3.png)<!-- -->
-
-```r
-qplot(crimedata$AsianPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-4.png)<!-- -->
-
-```r
-qplot(crimedata$OtherPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-5.png)<!-- -->
-
-```r
-qplot(crimedata$HispPerCap, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-8-6.png)<!-- -->
-
-```r
-##blackPerCap, indianPerCap, AsianPerCap, OtherPerCap, HispPerCap, whitePerCap
-##householdsize, population, ViolentCrimesPerPop, 
-```
--- racepctblack: percentage of population that is african american (numeric - decimal)
--- racePctWhite: percentage of population that is caucasian (numeric - decimal)
--- racePctAsian: percentage of population that is of asian heritage (numeric - decimal)
--- racePctHisp: percentage of population that is of hispanic heritage (numeric - decimal)
-
-
-```r
-##Community Crime Data by Rental levels and population density 
-
-cor(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2518469
-```
-
-```r
-cor(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2404937
-```
-
-```r
-cor(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2322902
-```
-
-```r
-cor(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.2813895
-```
-
-```r
-cor(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.2398638
-```
-
-```r
-cor(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.3250453
-```
-
-```r
-cor(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.06384668
-```
-
-```r
-qplot(crimedata$RentLowQ, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
-
-```r
-qplot(crimedata$RentMedian, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-2.png)<!-- -->
-
-```r
-qplot(crimedata$RentHighQ, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-3.png)<!-- -->
-
-```r
-qplot(crimedata$PopDens, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-4.png)<!-- -->
-
-```r
-qplot(crimedata$MedRent, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-5.png)<!-- -->
-
-```r
-qplot(crimedata$MedRentPctHousInc, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-6.png)<!-- -->
-
-```r
-qplot(crimedata$MedOwnCostPctInc, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-9-7.png)<!-- -->
-
-```r
-##ViolentCrimesPerPop
-##PopDens, RentLowQ, RentMedian, RentHighQ, MedRent, MedRentPctHousInc, MedOwnCostPctInc, 
-```
-
-
-```r
-##Community crime data based on housing occupancy
-
-cor(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.4213958
-```
-
-```r
-cor(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.3190097
-```
-
-```r
-cor(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.4706826
-```
-
-```r
-cor(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.4828158
-```
-
-```r
-cor(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.02128283
-```
-
-```r
-qplot(crimedata$HousVacant, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
-
-```r
-qplot(crimedata$PctHousOccup, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
-
-```r
-qplot(crimedata$PctHousOwnOcc, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-10-3.png)<!-- -->
-
-```r
-qplot(crimedata$PctVacantBoarded, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-10-4.png)<!-- -->
-
-```r
-qplot(crimedata$PctVacMore6Mos, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-10-5.png)<!-- -->
-
-```r
-##HousVacant, PctHousOccup, PctHousOwnOcc, PctVacantBoarded, PctVacMore6Mos
-## House Occup Higher - Vacant and Boarded lower
-```
-
-
-```r
-##Community Crime Data - Education and Employement
-
-cor(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.4110955
-```
-
-```r
-cor(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.4833659
-```
-
-```r
-cor(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.3146752
-```
-
-```r
-cor(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.5042346
-```
-
-```r
-cor(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.3316428
-```
-
-```r
-cor(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.044906
-```
-
-```r
-cor(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.07148261
-```
-
-```r
-cor(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] 0.2955812
-```
-
-```r
-cor(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
-```
-
-```
-## [1] -0.3391092
-```
-
-```r
-qplot(crimedata$PctLess9thGrade, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
-
-```r
-qplot(crimedata$PctNotHSGrad, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
-
-```r
-qplot(crimedata$PctBSorMore, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-3.png)<!-- -->
-
-```r
-qplot(crimedata$PctUnemployed, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-4.png)<!-- -->
-
-```r
-qplot(crimedata$PctEmploy, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-5.png)<!-- -->
-
-```r
-qplot(crimedata$PctEmplManu, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-6.png)<!-- -->
-
-```r
-qplot(crimedata$PctEmplProfServ, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-7.png)<!-- -->
-
-```r
-qplot(crimedata$PctOccupManu, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-8.png)<!-- -->
-
-```r
-qplot(crimedata$PctOccupMgmtProf, crimedata$ViolentCrimesPerPop)
-```
-
-![](CaseStudy2_Report_files/figure-html/unnamed-chunk-11-9.png)<!-- -->
-
-```r
-##PctLess9thGrade, PctNotHSGrad, PctBSorMore, PctUnemployed, PctEmploy, PctEmplManu, PctEmplProfServ, PctOccupManu, PctOccupMgmtProf
-```
 -- PctLess9thGrade: percentage of people 25 and over with less than a 9th grade education (numeric - decimal)
 -- PctNotHSGrad: percentage of people 25 and over that are not high school graduates (numeric - decimal)
 -- PctBSorMore: percentage of people 25 and over with a bachelors degree or higher education (numeric - decimal)
