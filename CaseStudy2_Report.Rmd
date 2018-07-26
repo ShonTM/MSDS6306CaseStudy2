@@ -226,6 +226,90 @@ head(cdss)
 str(cdss)
 summary(cdss$crimedata.ViolentCrimesPerPop)
 
+nacdss <- is.na(cdss)
+#NABEER == NA
+#sum(NABEER, count = TRUE)
+ct_SUM <- colSums(nacdss)
+ct_SUM
+
+# Untransformed correlation test
+cor(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop)
+
+#Check for normality
+qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+
+cdsslog <- log10(cdss)
+cdsslog <- subset(cdsslog, select = -crimedatalog )
+head(cdsslog)
+
+
+#Check for normality after log transformation
+# cdss$crimedatalog <- log(cdss$crimedata.ViolentCrimesPerPop)
+# cdss$crimedatalog <- as.numeric(cdss$crimedatalog)
+# qqnorm(cdss$crimedatalog, pch = 1, frame = FALSE) ## plots the data
+# qqline(cdss$crimedatalog, col = "steelblue", lwd = 2) ## adds a line
+# grep("?", cdss) ## tells you which lines contain the word in the parenthesis. 
+
+# cdss[] <- lapply(cdss, gsub, pattern='-Inf', replacement='') ## removes chars from dataset
+# grep("-Inf", cdss) ## tells you which lines contain the word in the parenthesis.
+
+# Transform dataset to numeric for analysis
+cdss[] <- lapply(cdss, function(x) as.numeric(as.character(x)))
+
+
+
+# nancdss <- is.nan(cdss)
+# #NABEER == NA
+# #sum(NABEER, count = TRUE)
+# ct_SUM1 <- colSums(nancdss)
+# ct_SUM1
+
+str(cdss)
+
+# Check for normality of log transformed data
+qqnorm(cdss$crimedatalog, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedatalog, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE) ## plots the data
+qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+
+head(cdss)
+
+# Check for correlation of log transformed violent crime data
+cor(cdss$crimedata.medIncome, cdss$crimedatalog)
+cor(cdss$crimedata.agePct12t29, cdss$crimedatalog)
+cor(cdss$crimedata.blackPerCap, cdss$crimedatalog)
+cor(cdss$crimedata.HispPerCap, cdss$crimedatalog)
+cor(cdss$crimedata.RentLowQ, cdss$crimedatalog)
+cor(cdss$crimedata.PctLess9thGrade, cdss$crimedatalog)
+
 ```
 
 
