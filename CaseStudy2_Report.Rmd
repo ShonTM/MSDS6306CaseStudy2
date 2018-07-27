@@ -220,7 +220,7 @@ lines(newx,prd_p[,3],col = "green", lty = 2, lwd = 2)
 ```{r}
 
 data = crimedata
-cdss <- data.frame(crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
+cdss <- data.frame(crimedata$householdsize, crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
 
 head(cdss)
 str(cdss)
@@ -239,6 +239,8 @@ nacdss <- is.na(cdss)
 
 
 # Untransformed correlation test
+cor(cdss$crimedata.householdsize, cdss$crimedata.ViolentCrimesPerPop)
+
 cor(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop)
 cor(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop)
 cor(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop)
@@ -247,6 +249,8 @@ cor(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop)
 cor(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop)
 
 # Pearson's correlation test
+cor.test(cdss$crimedata.householdsize, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+
 cor.test(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
 cor.test(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
 cor.test(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
@@ -254,21 +258,30 @@ cor.test(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop, method =
 cor.test(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
 cor.test(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
 
+```
 
+
+```{r}
 #Check for normality
-qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE, ylab ="Violent Crime Per Pop", xlab = "Spread of datapoints", main= "Violent Crime Per Pop Data", col="red") ## plots the data
 qqline(cdss$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
+
+qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE, ylab ="Median HH Income", xlab = "Spread of datapoints", main= "Median Income Data", col= "Blue") ## plots the data
 qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
+
+qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE, ylab ="Age % between 12 to 29 yrs old", xlab = "Spread of datapoints", main= "Age % 12 - 29 yrs old Data", col="Orange") ## plots the data
 qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
+
+qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE, ylab ="Black Per Capita", xlab = "Spread of datapoints", main= "Black Per Capita data", col="green") ## plots the data
 qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
+
+qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE, ylab ="Hispanic per Capita", xlab = "Spread of datapoints", main= "Hispanic Per Capita data", col= "red") ## plots the data
 qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
+
+qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE, ylab ="Rent Low by Quartile", xlab = "Spread of datapoints", main= "Low Rent Q data", col= "darkgreen") ## plots the data
 qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
-qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
+
+qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE, ylab ="% Less than 9th Grad Education ", xlab = "Spread of datapoints", main= "% Less then 9th Grade Education data", col="brown") ## plots the data
 qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
 
 
@@ -277,6 +290,16 @@ qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a lin
 
 
 ```{r}
+
+#library(randomForest)
+#data = cdss
+#cdds.rf <- randomForest(ViolentCrimesPerPop, PctLess9thGrade)
+
+#cdds.rf
+#cdds.rf$importance
+#predict(cdds.rf, crimedata.ViolentCrimesPerPop)
+
+
 #Log Transform all variables
 cdsslog <- log(cdss)
 #cdsslog <- subset(cdsslog, select = -crimedatalog )
@@ -308,6 +331,9 @@ cdss[] <- lapply(cdss, function(x) as.numeric(as.character(x)))
 str(cdsslog)
 
 # Check for normality of log transformed data
+qqnorm(cdsslog$crimedata.householdsize, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdsslog$crimedata.householdsize, col = "steelblue", lwd = 2) ## adds a line
+
 qqnorm(cdsslog$crimedata.ViolentCrimesPerPop, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
 qqline(cdsslog$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
 qqnorm(cdsslog$crimedata.medIncome, ylim = NULL, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
