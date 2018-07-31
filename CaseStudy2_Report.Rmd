@@ -220,7 +220,101 @@ lines(newx,prd_p[,3],col = "green", lty = 2, lwd = 2)
 ```{r}
 
 data = crimedata
-cdss <- data.frame(crimedata$householdsize, crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
+#cdss <- data.frame(crimedata$householdsize, crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
+
+cdss <- data.frame(crimedata$householdsize,
+  crimedata$ViolentCrimesPerPop,
+crimedata$racepctblack,
+crimedata$racePctWhite,
+crimedata$racePctHisp,
+crimedata$PctLess9thGrade,
+crimedata$PctNotHSGrad,
+crimedata$PctBSorMore,
+crimedata$MalePctDivorce,
+crimedata$FemalePctDiv,
+crimedata$PctImmigRecent,
+crimedata$PctImmigRec5,
+crimedata$PctImmigRec8,
+crimedata$PctImmigRec10,
+crimedata$PctSpeakEnglOnly,
+crimedata$PctNotSpeakEnglWell,
+crimedata$RentLowQ,
+crimedata$RentMedian,
+crimedata$RentHighQ)
+
+
+cdss2 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$racepctblack,
+crimedata$racePctWhite,
+crimedata$racePctAsian,
+crimedata$racePctHisp,
+crimedata$agePct12t21,
+crimedata$agePct12t29,
+crimedata$agePct16t24,
+crimedata$agePct65up)
+
+cdss3 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$medIncome,
+crimedata$medFamInc,
+crimedata$perCapInc,
+crimedata$whitePerCap,
+crimedata$blackPerCap,
+crimedata$indianPerCap,
+crimedata$AsianPerCap,
+crimedata$OtherPerCap,
+crimedata$HispPerCap)
+
+cdss4 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$NumUnderPov,
+crimedata$PctPopUnderPov)
+
+cdss7 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$PctLess9thGrade,
+crimedata$PctNotHSGrad,
+crimedata$PctBSorMore,
+crimedata$PctUnemployed)
+
+cdss5 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$MalePctDivorce,
+crimedata$MalePctNevMarr,
+crimedata$FemalePctDiv,
+crimedata$TotalPctDiv,
+crimedata$NumIlleg,
+crimedata$PctIlleg)
+
+cdss6 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$NumImmig,
+crimedata$PctImmigRecent,
+crimedata$PctImmigRec5,
+crimedata$PctImmigRec8,
+crimedata$PctImmigRec10,
+crimedata$PctRecentImmig,
+crimedata$PctRecImmig5,
+crimedata$PctRecImmig8,
+crimedata$PctRecImmig10)
+
+
+cdss8 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$PctSpeakEnglOnly,
+crimedata$PctNotSpeakEnglWell,
+crimedata$RentLowQ,
+crimedata$RentMedian,
+crimedata$RentHighQ)
+
+
+crimedata$MedRent,
+crimedata$MedRentPctHousInc,
+crimedata$MedOwnCostPctInc,
+crimedata$MedOwnCostPctIncNoMtg,
+crimedata$NumInShelters)
+
 
 head(cdss)
 str(cdss)
@@ -261,31 +355,7 @@ cor.test(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop, met
 ```
 
 
-```{r}
-#Check for normality
-qqnorm(cdss$crimedata.ViolentCrimesPerPop, pch = 1, frame = FALSE, ylab ="Violent Crime Per Pop", xlab = "Spread of datapoints", main= "Violent Crime Per Pop Data", col="red") ## plots the data
-qqline(cdss$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
 
-qqnorm(cdss$crimedata.medIncome, pch = 1, frame = FALSE, ylab ="Median HH Income", xlab = "Spread of datapoints", main= "Median Income Data", col= "Blue") ## plots the data
-qqline(cdss$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
-
-qqnorm(cdss$crimedata.agePct12t29, pch = 1, frame = FALSE, ylab ="Age % between 12 to 29 yrs old", xlab = "Spread of datapoints", main= "Age % 12 - 29 yrs old Data", col="Orange") ## plots the data
-qqline(cdss$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
-
-qqnorm(cdss$crimedata.blackPerCap, pch = 1, frame = FALSE, ylab ="Black Per Capita", xlab = "Spread of datapoints", main= "Black Per Capita data", col="green") ## plots the data
-qqline(cdss$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
-
-qqnorm(cdss$crimedata.HispPerCap, pch = 1, frame = FALSE, ylab ="Hispanic per Capita", xlab = "Spread of datapoints", main= "Hispanic Per Capita data", col= "red") ## plots the data
-qqline(cdss$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
-
-qqnorm(cdss$crimedata.RentLowQ, pch = 1, frame = FALSE, ylab ="Rent Low by Quartile", xlab = "Spread of datapoints", main= "Low Rent Q data", col= "darkgreen") ## plots the data
-qqline(cdss$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
-
-qqnorm(cdss$crimedata.PctLess9thGrade, pch = 1, frame = FALSE, ylab ="% Less than 9th Grad Education ", xlab = "Spread of datapoints", main= "% Less then 9th Grade Education data", col="brown") ## plots the data
-qqline(cdss$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
-
-
-```
 
 
 
@@ -405,6 +475,91 @@ age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
 -- PctOccupManu: percentage of people 16 and over who are employed in manufacturing (numeric - decimal) ########
 -- PctOccupMgmtProf: percentage of people 16 and over who are employed in management or professional occupations (numeric - decimal)
 
+```{r}
+
+library(randomForest)
+#crimedata
+c<- cdss2[ , -1]
+d<- cdss2[ , 2]
+cdss.rf2 <- randomForest(c, d)
+cdss.rf2
+cdss.rf2$importance
+predict(cdss.rf2, c)
+
+
+
+c<- cdss3[ , -1]
+d<- cdss3[ , 1]
+cdss.rf3 <- randomForest(c, d)
+cdss.rf3
+cdss.rf3$importance
+predict(cdss.rf3, c)
+
+
+
+c<- cdss4[ , -1]
+d<- cdss4[ , 1]
+cdss.rf4 <- randomForest(c, d)
+cdss.rf4
+cdss.rf4$importance
+predict(cdss.rf4, c)
+
+
+
+c<- cdss5[ , -1]
+d<- cdss5[ , 1]
+cdss.rf5 <- randomForest(c, d)
+cdss.rf5
+cdss.rf5$importance
+predict(cdss.rf5, c)
+
+
+c<- cdss6[ , -1]
+d<- cdss6[ , 1]
+cdss.rf6 <- randomForest(c, d)
+cdss.rf6
+cdss.rf6$importance
+predict(cdss.rf6, c)
+
+c<- cdss7[ , -1]
+d<- cdss7[ , 1]
+cdss.rf7 <- randomForest(c, d)
+cdss.rf7
+cdss.rf7$importance
+predict(cdss.rf7, c)
+
+c<- cdss8[ , -1]
+d<- cdss8[ , 1]
+cdss.rf8 <- randomForest(c, d)
+cdss.rf8
+cdss.rf8$importance
+predict(cdss.rf8, c)
+
+c<- cdss[ , -1]
+d<- cdss[ , 1]
+cdss.rf <- randomForest(c, d)
+cdss.rf
+cdss.rf$importance
+predict(cdss.rf, c)
+
+  labels <- data.frame(crimedata$householdsize, crimedata$ViolentCrimesPerPop, crimedata$medIncome, crimedata$agePct12t29, crimedata$blackPerCap,crimedata$HispPerCap, crimedata$RentLowQ, crimedata$PctLess9thGrade)
+  randomForest(crimedata, labels)
+
+
+
+```
+
+```{r}
+# 1. Tools
+library(pROC)
+library(randomForest)
+library(ggplot2)
+library(reshape2)
+
+
+
+# 3. Preliminary Data Viz.
+ggplot(data = melt(cdss1), mapping = aes(x = value)) + geom_histogram(bins = 20) + facet_wrap(~variable, scales = 'free_x')
 
 ## Conclusion
 

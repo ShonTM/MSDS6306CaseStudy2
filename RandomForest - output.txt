@@ -1,0 +1,100 @@
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 2
+
+          Mean of squared residuals: 0.01347703
+                    % Var explained: 75.05
+> cdss.rf2$importance
+                              IncNodePurity
+crimedata.ViolentCrimesPerPop     12.325478
+crimedata.racepctblack            21.634242
+crimedata.racePctWhite            23.372503
+crimedata.racePctAsian             9.411781
+crimedata.agePct12t21              9.924523
+crimedata.agePct12t29              9.239794
+crimedata.agePct16t24              8.190262
+crimedata.agePct65up               9.276892
+
+ 
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 2
+
+          Mean of squared residuals: 0.001729351
+                    % Var explained: 95.78
+> cdss.rf4$importance
+                              IncNodePurity
+crimedata.ViolentCrimesPerPop      2.703012
+crimedata.NumUnderPov              1.162650
+crimedata.PctPopUnderPov           9.451718
+crimedata.PctLess9thGrade         39.460584
+crimedata.PctBSorMore             18.522697
+crimedata.PctUnemployed            9.734333
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 2
+
+          Mean of squared residuals: 0.0001723602
+                    % Var explained: 99.49
+> cdss.rf5$importance
+                              IncNodePurity
+crimedata.ViolentCrimesPerPop     4.8131476
+crimedata.MalePctDivorce         26.7618396
+crimedata.MalePctNevMarr          0.7737744
+crimedata.FemalePctDiv           28.3597755
+crimedata.NumIlleg                1.6777132
+crimedata.PctIlleg                4.7105055
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 3
+
+          Mean of squared residuals: 0.0020169
+                    % Var explained: 95.03
+> cdss.rf6$importance
+                              IncNodePurity
+crimedata.ViolentCrimesPerPop     0.7666572
+crimedata.NumImmig                0.2704541
+crimedata.PctImmigRecent         13.2323395
+crimedata.PctImmigRec5           27.5161557
+crimedata.PctImmigRec10          28.7080240
+crimedata.PctRecentImmig          2.3185585
+crimedata.PctRecImmig5            3.4065681
+crimedata.PctRecImmig8            2.9930664
+crimedata.PctRecImmig10           1.0412300
+
+
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 1
+
+          Mean of squared residuals: 0.01747827
+                    % Var explained: 57.22
+> cdss.rf7$importance
+                              IncNodePurity
+crimedata.ViolentCrimesPerPop      15.27924
+crimedata.PctLess9thGrade          19.95129
+crimedata.PctNotHSGrad             21.23731
+crimedata.PctBSorMore              16.84534
+
+
+                              IncNodePurity
+crimedata.PctSpeakEnglOnly         17.66432
+crimedata.PctNotSpeakEnglWell      19.06237
+crimedata.RentLowQ                 17.97559
+crimedata.RentMedian               15.98085
+crimedata.RentHighQ                16.44343
+
