@@ -98,3 +98,69 @@ crimedata.RentLowQ                 17.97559
 crimedata.RentMedian               15.98085
 crimedata.RentHighQ                16.44343
 
+
+
+TOP VARIABLES WITH HIGH IMPORTANCE -------------------
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 2
+
+          Mean of squared residuals: 0.02212183
+                    % Var explained: 59.23
+> cdss.rf8$importance
+                          IncNodePurity
+crimedata.PctImmigRec5         5.629283
+crimedata.PctImmigRec10        6.071962
+crimedata.MalePctDivorce      11.971128
+crimedata.FemalePctDiv        15.637508
+crimedata.racepctblack        19.783640
+crimedata.racePctWhite        24.879554
+crimedata.PctLess9thGrade      8.632761
+crimedata.PctNotHSGrad        10.071027
+> predict(cdss.rf8, c)
+
+
+
+
+Call:
+ randomForest(x = c, y = d) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 6
+
+          Mean of squared residuals: 0.0005074014
+                    % Var explained: 98.11
+> cdss.rf$importance
+                              IncNodePurity
+crimedata.householdsize          35.3877680
+crimedata.ViolentCrimesPerPop     0.3163883
+crimedata.racepctblack            0.3941903
+crimedata.racePctHisp             3.9706607
+crimedata.PctLess9thGrade         0.9683567
+crimedata.PctNotHSGrad            1.0257542
+crimedata.PctBSorMore             0.7474976
+crimedata.MalePctDivorce          2.9536622
+crimedata.FemalePctDiv            1.5957726
+crimedata.PctImmigRecent          0.2011055
+crimedata.PctImmigRec5            0.1845948
+crimedata.PctImmigRec8            0.1947062
+crimedata.PctImmigRec10           0.2921889
+crimedata.PctSpeakEnglOnly        1.9498789
+crimedata.PctNotSpeakEnglWell     1.8653144
+crimedata.RentLowQ                0.3496673
+crimedata.RentMedian              0.3425447
+crimedata.RentHighQ               0.3704562
+> predict(cdss.rf, c)
+         1          2          3          4  
+
+
+crimedata.householdsize       35.3877680 
+crimedata.MalePctDivorce      11.971128
+crimedata.FemalePctDiv        15.637508
+crimedata.racepctblack        19.783640
+crimedata.racePctWhite        24.879554
+crimedata.PctLess9thGrade      8.632761
+crimedata.PctNotHSGrad        10.071027
