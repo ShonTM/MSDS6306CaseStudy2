@@ -16,14 +16,19 @@ data import and tidy data
 Introduction:
 
 Comm
+```{r}
+#Get data and save locally
+crimedata  <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
+df <- read.csv(crimedata, header = FALSE)
+write.csv(df, file="crimedata.csv")
+
+crimedata <- read.csv("crimedata.csv")
+head(crimedata)
+```
 
 
 ```{r}
-crimedata  <- "http://archive.ics.uci.edu/ml/machine-learning-databases/communities/communities.data"
-df <- read.csv(crimedata, header = FALSE)
 
-crimedata <- df 
-str(crimedata)
 
 colnames(crimedata) <- c("state",
 "county",
@@ -215,6 +220,8 @@ lines(newx,prd_p[,3],col = "green", lty = 2, lwd = 2)
 
 
 ```
+We see that there is little discernable pattern when plotting crimes to income. 
+
 
 
 ```{r}
@@ -239,11 +246,55 @@ crimedata$NumIlleg,
 crimedata$PctIlleg)
 
 
-head(cdss8)
+
+cdss8 <- data.frame(
+  crimedata$ViolentCrimesPerPop,
+crimedata$PctSpeakEnglOnly,
+crimedata$PctNotSpeakEnglWell,
+crimedata$RentLowQ,
+crimedata$RentMedian,
+crimedata$RentHighQ)
+
+
+crimedata$MedRent,
+crimedata$MedRentPctHousInc,
+crimedata$MedOwnCostPctInc,
+crimedata$MedOwnCostPctIncNoMtg,
+crimedata$NumInShelters)
+
+
+head(cdss)
 str(cdss)
 summary(cdss$crimedata.ViolentCrimesPerPop)
 
 nacdss <- is.na(cdss)
+
+```
+
+
+
+
+
+# Untransformed correlation test
+cor(cdss$crimedata.householdsize, cdss$crimedata.ViolentCrimesPerPop)
+
+cor(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop)
+cor(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop)
+
+# Pearson's correlation test
+cor.test(cdss$crimedata.householdsize, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+
+cor.test(cdss$crimedata.medIncome, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.agePct12t29, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.blackPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.HispPerCap, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.RentLowQ, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdss$crimedata.PctLess9thGrade, cdss$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+
 ```
 
 
@@ -251,13 +302,110 @@ nacdss <- is.na(cdss)
 
 
 
+```{r}
+
+#library(randomForest)
+#data = cdss
+#cdds.rf <- randomForest(ViolentCrimesPerPop, PctLess9thGrade)
+
+#cdds.rf
+#cdds.rf$importance
+#predict(cdds.rf, crimedata.ViolentCrimesPerPop)
+
+
+#Log Transform all variables
+cdsslog <- log(cdss)
+#cdsslog <- subset(cdsslog, select = -crimedatalog )
+head(cdsslog)
 
 
 
+#Check for normality after log transformation
+# cdss$crimedatalog <- log(cdss$crimedata.ViolentCrimesPerPop)
+# cdss$crimedatalog <- as.numeric(cdss$crimedatalog)
+# qqnorm(cdss$crimedatalog, pch = 1, frame = FALSE) ## plots the data
+# qqline(cdss$crimedatalog, col = "steelblue", lwd = 2) ## adds a line
+# grep("?", cdss) ## tells you which lines contain the word in the parenthesis. 
+
+# cdss[] <- lapply(cdss, gsub, pattern='-Inf', replacement='') ## removes chars from dataset
+# grep("-Inf", cdss) ## tells you which lines contain the word in the parenthesis.
+
+# Transform dataset to numeric for analysis
+cdss[] <- lapply(cdss, function(x) as.numeric(as.character(x)))
 
 
 
+##nancdss <- is.nan(cdsslog)
+# #NABEER == NA
+# #sum(NABEER, count = TRUE)
+##ct_SUM1 <- colSums(nancdss)
+##ct_SUM1
 
+str(cdsslog)
+
+# Check for normality of log transformed data
+qqnorm(cdsslog$crimedata.householdsize, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdsslog$crimedata.householdsize, col = "steelblue", lwd = 2) ## adds a line
+
+qqnorm(cdsslog$crimedata.ViolentCrimesPerPop, ylim = NULL, pch = 1, frame = FALSE, main= "Violent Crime Per Pop Data") ## plots the data
+qqline(cdsslog$crimedata.ViolentCrimesPerPop, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.medIncome, ylim = NULL, pch = 1, frame = FALSE, main= "Median Income Data") ## plots the data
+qqline(cdsslog$crimedata.medIncome, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.agePct12t29, ylim = NULL,pch = 1, frame = FALSE, main= "Age % 12 - 29 yrs old Data") ## plots the data
+qqline(cdsslog$crimedata.agePct12t29, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.blackPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Black Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.blackPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.HispPerCap, ylim = NULL, pch = 1, frame = FALSE, main= "Hispanic Per Capita data") ## plots the data
+qqline(cdsslog$crimedata.HispPerCap, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.RentLowQ, ylim = NULL, pch = 1, frame = FALSE, main= "Low Rent Q data") ## plots the data
+qqline(cdsslog$crimedata.RentLowQ, col = "steelblue", lwd = 2) ## adds a line
+qqnorm(cdsslog$crimedata.PctLess9thGrade, ylim = NULL, pch = 1, frame = FALSE, main= "% Less then 9th Grade Education data") ## plots the data
+qqline(cdsslog$crimedata.PctLess9thGrade, col = "steelblue", lwd = 2) ## adds a line
+
+
+
+head(cdsslog)
+
+
+class(cdsslog)
+
+
+# Check for correlation of log transformed violent crime data
+cor.test(cdsslog$crimedata.medIncome, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.agePct12t29, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.blackPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.HispPerCap, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.RentLowQ, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+cor.test(cdsslog$crimedata.PctLess9thGrade, cdsslog$crimedata.ViolentCrimesPerPop, method = "pearson", alternative = "two.sided")
+
+```
+
+
+
+```{r}
+
+
+class(cdss$crimedata.ViolentCrimesPerPop)
+cdsv <- cdss$crimedata.ViolentCrimesPerPop
+
+hist(cdsv, prob = TRUE, col = "blue", main= "Histogram of Violent Crime Per Population", xlab ="count", ylab="% of Crime per Pop")
+
+
+curve(dnorm(x, mean=mean(cdsv), sd=sd(cdsv)), add=TRUE,
+  col = "blue", main= "Histogram of Violent Crime Per Populatin", xlab ="count", ylab="% of Crime per Pop")
+box()
+
+
+
+##Scatterplot of the original data
+##plot(temp, chirps, ylab = "Chirps Per Minute", xlab = "Temperature")
+
+Income<- cor(crimedata$ViolentCrimesPerPop, crimedata$medIncome)
+pop <- cor(crimedata$ViolentCrimesPerPop, crimedata$population)
+HH <- cor(crimedata$ViolentCrimesPerPop, crimedata$householdsize)
+age1221 <- cor(crimedata$agePct12t21, crimedata$ViolentCrimesPerPop)
+
+```
 
 
 -- PctLess9thGrade: percentage of people 25 and over with less than a 9th grade education (numeric - decimal)
